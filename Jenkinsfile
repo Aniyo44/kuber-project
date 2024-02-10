@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_CREDENTIALS_ID = 'your-docker-hub-credentials-id'
-        DOCKER_IMAGE_NAME = 'your-docker-image-name'
+        DOCKER_IMAGE_NAME = 'my-image'
         DOCKER_IMAGE_TAG = 'latest'
     }
 
