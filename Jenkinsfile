@@ -10,9 +10,14 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                // Here you can add steps to deploy your Docker image if needed
+                script {
+                    sh 'docker login -u yaf_did -p klausisgay'
+                    sh 'docker push my-image:latest'
+                    // Add additional deployment steps here if needed
+                }
             }
         }
     }
 }
+
 
