@@ -11,13 +11,16 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    sh 'docker login -u newyaf44 -p seifkrimi'
-                    sh 'docker push my-image:latest'
+                    // Use withCredentials to securely access Docker credentials
+                    withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-cred', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
+                        // Use the Docker Hub credentials from Jenkins credentials store
+                        sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
+                        sh 'docker push my-image:latest'
+                    }
                     // Add additional deployment steps here if needed
                 }
             }
         }
     }
 }
-
 
