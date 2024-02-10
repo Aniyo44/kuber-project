@@ -15,7 +15,7 @@ pipeline {
                     withCredentials([[$class: 'UsernamePasswordMultiBinding', credentialsId: 'docker-cred', usernameVariable: 'DOCKER_USERNAME', passwordVariable: 'DOCKER_PASSWORD']]) {
                         // Use the Docker Hub credentials from Jenkins credentials store
                         sh 'docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD'
-                        sh 'docker push my-image:latest'
+                        sh 'docker push docker.io/my-image:latest'
                     }
                     // Add additional deployment steps here if needed
                 }
