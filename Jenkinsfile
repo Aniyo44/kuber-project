@@ -1,7 +1,7 @@
 pipeline {
     agent any
 
-    ienvironment {
+    environment {
         DOCKER_IMAGE_NAME = 'my-image'
         DOCKER_IMAGE_TAG = 'latest'
     }
