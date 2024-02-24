@@ -17,7 +17,7 @@ pipeline {
                 sh 'docker build -t myimage:${BUILD_NUMBER} .'
             }
         }
-        stage('Deploy to Kind') {
+        stage('Deploy to K8s with kind') {
             steps {
                 script {
                     try {
