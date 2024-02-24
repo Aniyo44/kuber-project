@@ -27,7 +27,7 @@ pipeline {
                     sh 'kind load docker-image myimage:${BUILD_NUMBER} --name mykindcluster'
                     
                     // Apply YAML file to deploy
-                    sh 'kubectl apply -f your_yaml_file.yaml'
+                    sh 'kubectl apply -f kind-config.yaml'
                 }
             }
         }
