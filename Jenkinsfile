@@ -19,7 +19,7 @@ pipeline{
         }
       
     }
-     stage('Deploy to Kind') {
+        stage('Deploy to Kind') {
             steps {
                 script {
                     // Create Kubernetes cluster with Kind
