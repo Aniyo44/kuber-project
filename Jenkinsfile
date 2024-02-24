@@ -20,19 +20,14 @@ pipeline {
         stage('Deploy to Kind') {
             steps {
                 script {
-                    try {
-                        // Create Kubernetes cluster with Kind using the specified configuration file
-                        sh 'kind create cluster --name mykindcluster --config kind-config.yaml'
-                        
-                        // Load Docker image into Kind cluster
-                        sh 'kind load docker-image myimage:${BUILD_NUMBER} --name mykindcluster'
-                        
-                        // Apply YAML file to deploy
-                        sh 'kubectl apply -f kind-config.yaml'
-                    } catch (Exception e) {
-                        echo "An error occurred while deploying to Kind: ${e.message}"
-                        // You can choose to perform any cleanup or additional actions here if needed
-                    }
+                    // Create Kubernetes cluster with Kind using the specified configuration file
+                    sh 'kind create cluster --name mykindcluster --config kind-config.yaml'
+                    
+                    // Load Docker image into Kind cluster
+                    sh 'kind load docker-image myimage:${BUILD_NUMBER} --name mykindcluster'
+                    
+                    // Apply YAML file to deploy
+                    sh 'kubectl apply -f kind-config.yaml'
                 }
             }
         }
