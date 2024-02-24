@@ -20,14 +20,19 @@ pipeline {
         stage('Deploy to Kind') {
             steps {
                 script {
-                    // Create Kubernetes cluster with Kind using the specified configuration file
-                    sh 'kind create cluster --name mykindcluster --config kind-config.yaml'
-                    
-                    // Load Docker image into Kind cluster
-                    sh 'kind load docker-image myimage:${BUILD_NUMBER} --name mykindcluster'
-                    
-                    // Apply YAML file to deploy
-                    sh 'kubectl apply -f kind-config.yaml'
+                    def isCgroupNamespaceEnabled = sh(script: "cat /proc/config.gz | zgrep -i cgroup", returnStatus: true) == 0
+                    if (isCgroupNamespaceEnabled) {
+                        // Create Kubernetes cluster with Kind using the specified configuration file
+                        sh 'kind create cluster --name mykindcluster --config kind-config.yaml'
+                        
+                        // Load Docker image into Kind cluster
+                        sh 'kind load docker-image myimage:${BUILD_NUMBER} --name mykindcluster'
+                        
+                        // Apply YAML file to deploy
+                        sh 'kubectl apply -f kind-config.yaml'
+                    } else {
+                        echo "Cgroup namespaces are not enabled in the kernel. Skipping deployment to Kind."
+                    }
                 }
             }
         }
