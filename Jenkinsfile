@@ -20,14 +20,14 @@ pipeline {
         stage('Deploy to Kind') {
             steps {
                 script {
-                    // Create Kubernetes cluster with Kind
-                    sh 'kind create cluster --name mykindcluster'
+                    // Create Kubernetes cluster with Kind using the specified configuration file
+                    sh 'kind create cluster --name mykindcluster --config kind-config.yaml'
                     
                     // Load Docker image into Kind cluster
                     sh 'kind load docker-image myimage:${BUILD_NUMBER} --name mykindcluster'
                     
                     // Apply YAML file to deploy
-                    sh 'kubectl apply -f deployment.yaml'
+                    sh 'kubectl apply -f kind-config.yaml'
                 }
             }
         }
